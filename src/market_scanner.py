@@ -18,12 +18,28 @@ class MarketScanner:
             # fetch_tickers returns all, we sort by 'quoteVolume'
             tickers = self.client.exchange.fetch_tickers()
             
-            # Convert to list and filter for USDT futures
+            # Convert to list and filter for USDT futures (PERPETUAL only)
             valid_tickers = []
             for symbol, data in tickers.items():
+                # Check 1: Symbol string
                 if '/USDT' in symbol and 'BUSD' not in symbol:
-                     # Basic validation
-                     if data.get('quoteVolume') is not None:
+                     # Check 2: Contract Type (strictly swap/perpetual)
+                     # CCXT usually puts 'swap' in type, or check if info has contractType
+                     is_perp = False
+                     if data.get('swap'): # CCXT 'swap' boolean
+                         is_perp = True
+                     elif data.get('info') and data['info'].get('contractType') == 'PERPETUAL':
+                         is_perp = True
+                     elif ':' in symbol:
+                         # Heuristic: linear perps usually "BTC/USDT:USDT"
+                         # Delivery usually has dates e.g. "BTC/USDT:USDT-250328"
+                         # Check if suffix contains digits
+                         suffix = symbol.split(':')[-1]
+                         has_digits = any(char.isdigit() for char in suffix)
+                         if not has_digits:
+                              is_perp = True
+                     
+                     if is_perp and data.get('quoteVolume') is not None:
                          valid_tickers.append(data)
             
             # Sort by 24h Volume (descending)

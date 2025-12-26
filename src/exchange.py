@@ -14,6 +14,7 @@ class BinanceClient:
             'enableRateLimit': True,
             'options': {
                 'defaultType': 'future',  # 默认使用合约 (Futures)
+                'fetchMarkets': ['linear'], # Only fetch USDT Futures to avoid SAPI/Margin calls
             }
         }
         
@@ -32,6 +33,10 @@ class BinanceClient:
             self.exchange.urls['api']['sapi'] = 'https://testnet.binance.vision/sapi/v1'
             
             print("⚠️ Running in TESTNET mode (Manual URL Config)")
+            
+        # Optimization: Disable fetchCurrencies to prevent CCXT from hitting SAPI endpoints on load_markets()
+        self.exchange.has['fetchCurrencies'] = False
+
 
     def validate_connectivity(self):
         """
@@ -134,15 +139,40 @@ class BinanceClient:
         批量获取资金费率 (Batch Fetch Funding Rates)
         """
         try:
-            # fetch_funding_rates returns a dictionary for some exchanges, or list for others.
-            # For Binance, it usually returns a dictionary indexed by symbol or a list.
-            # CCXT unified: usually a dict if params empty? No, fetch_funding_rates usually returns list or dict.
-            # Let's check CCXT docs/behavior: for binance it returns a list of dictionaries.
-            rates = self.exchange.fetch_funding_rates()
+            # Endpoint: fapiPublicGetPremiumIndex
+            response = self.exchange.fapiPublicGetPremiumIndex()
+            
+            # Debugging type check
+            if not isinstance(response, list):
+                print(f"⚠️ get_funding_rates: info response is not a list, got {type(response)}")
+                return {}
+
             funding_map = {}
-            for symbol, data in rates.items():
-                funding_map[symbol] = float(data['fundingRate'])
+            for item in response:
+                # item should be a dict
+                if not isinstance(item, dict):
+                    continue
+                    
+                raw_symbol = item.get('symbol')
+                rate = item.get('lastFundingRate')
+                
+                if raw_symbol and rate is not None:
+                    # Resolve to CCXT symbol if possible
+                    market = self.exchange.markets_by_id.get(raw_symbol)
+                    
+                    # Handle case where market might be a list (collision or ccxt structure)
+                    if isinstance(market, list):
+                        market = market[0]
+                        
+                    if market and isinstance(market, dict):
+                        funding_map[market['symbol']] = float(rate)
+                    else:
+                        # Map raw symbol directly as fallback or try simple parsing
+                         funding_map[raw_symbol] = float(rate)
+                    
             return funding_map
         except Exception as e:
+            import traceback
+            traceback.print_exc()
             print(f"❌ Error fetching funding rates: {e}")
             return {}

@@ -1,0 +1,12 @@
+2026-01-06 11:44:54 [INFO] AiTrader: === 🚀 Starting Quantitative Trading Bot (AsyncIO) ===
+2026-01-06 11:44:54 [WARNING] AiTrader: ⚠️ Running in TESTNET mode (Manual URL Config)
+2026-01-06 11:44:55 [INFO] AiTrader: ✅ Binance API Connected Successfully
+2026-01-06 11:44:55 [INFO] AiTrader: ✅ Bot initialized. Schedule: Every 5 minutes.
+2026-01-06 11:44:55 [INFO] AiTrader: 🔍 Scanning Market for Top Assets...
+2026-01-06 11:44:58 [INFO] AiTrader: ✅ Scanner Selected 20 coins: ['BTC/USDT:USDT', 'DOGE/USDT:USDT', 'XRP/USDT:USDT', 'ETH/USDT:USDT', 'BCH/USDT:USDT', 'BNB/USDT:USDT', 'MYRO/USDT:USDT', 'BTCDOM/USDT:USDT', 'PONKE/USDT:USDT', 'VOXEL/USDT:USDT', 'AIA/USDT:USDT', 'FIS/USDT:USDT', 'TOKEN/USDT:USDT', 'REI/USDT:USDT', 'PORT3/USDT:USDT', '1000X/USDT:USDT', 'OBOL/USDT:USDT', 'RIVER/USDT:USDT', 'MILK/USDT:USDT', 'SKATE/USDT:USDT']
+2026-01-06 11:44:58 [INFO] AiTrader: --- ⚖️ Starting Rebalance Cycle ---
+2026-01-06 11:44:58 [INFO] AiTrader: 💰 Account Equity: 0.00 USDT
+2026-01-06 11:44:58 [CRITICAL] AiTrader: 🛑 STOPPING BOT DUE TO RISK LIMIT
+2026-01-06 11:44:58 [INFO] AiTrader: 💤 Sleeping for 296.6s...
+2026-01-06 11:45:02 [INFO] AiTrader: 🛑 Bot stopping gracefully...
+2026-01-06 11:45:02 [INFO] AiTrader: 🔌 Connection closed.

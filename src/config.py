@@ -1,42 +1,51 @@
 import os
 from dotenv import load_dotenv
+from typing import List, Optional
+from pydantic import Field
+from pydantic_settings import BaseSettings
 
 # Load environment variables from .env file
 load_dotenv()
 
-class Config:
+class Settings(BaseSettings):
     # Exchange Configuration
-    API_KEY = os.getenv("BINANCE_API_KEY")
-    SECRET_KEY = os.getenv("BINANCE_SECRET_KEY")
-    IS_TESTNET = os.getenv("IS_TESTNET", "True").lower() == "true"
+    # Using alias to map env vars to fields
+    API_KEY: str = Field(..., alias="BINANCE_API_KEY")
+    SECRET_KEY: str = Field(..., alias="BINANCE_SECRET_KEY")
+    IS_TESTNET: bool = Field(default=True)
     
     # Trading Parameters
-    INITIAL_EQUITY = 200.0  # USDT
-    TARGET_COIN_COUNT = 20
-    TARGET_VALUE_PER_COIN = 20.0  # USDT
-    LEVERAGE = 5
-    EFFECTIVE_LEVERAGE = 2.0
+    INITIAL_EQUITY: float = 200.0  # USDT
+    TARGET_COIN_COUNT: int = 20
+    TARGET_VALUE_PER_COIN: float = 20.0  # USDT
     
     # Rebalancing Parameters
-    REBALANCE_THRESHOLD_PCT = 0.05  # 5%
-    SCAN_INTERVAL_MINUTES = 5
+    REBALANCE_THRESHOLD_PCT: float = 0.05  # 5%
+    SCAN_INTERVAL_MINUTES: int = 5
     
     # Risk Management
-    MAX_DRAWDOWN_PCT = 0.30  # 30%
-    MAX_FUNDING_RATE_APR = 1.00 # 100% APR
+    MAX_DRAWDOWN_PCT: float = 0.30  # 30%
+    MAX_FUNDING_RATE_APR: float = 1.00 # 100% APR
     
     # Minimum Order Value (Binance Futures constraint)
-    # Typically 5 USDT, keeping it slightly higher to be safe
-    MIN_ORDER_VALUE = 5.1 
+    MIN_ORDER_VALUE: float = 5.1 
 
-    # Dynamic Whitelist (to be populated by Scanner)
-    # Initial manual list for testing if scanner not ready
-    DEFAULT_COINS = [
+    # Dynamic Whitelist (fallback)
+    DEFAULT_COINS: List[str] = [
         "BTC/USDT", "ETH/USDT", "SOL/USDT", "BNB/USDT", "DOGE/USDT",
         "XRP/USDT", "ADA/USDT", "AVAX/USDT", "LINK/USDT", "DOT/USDT"
     ]
 
-    @classmethod
-    def validate(cls):
-        if not cls.API_KEY or not cls.SECRET_KEY:
-            raise ValueError("API credentials missing. Please set BINANCE_API_KEY and BINANCE_SECRET_KEY in .env")
+    class Config:
+        env_file = ".env"
+        extra = "ignore" 
+
+# Global instance
+try:
+    Config = Settings()
+    # Backward compatibility for class-based usage if needed, 
+    # but simplest is to just use 'Config' instance directly as before.
+except Exception as e:
+    print(f"❌ Configuration Error: {e}")
+    # Fallback/Exit? For now raise so user sees it
+    raise e

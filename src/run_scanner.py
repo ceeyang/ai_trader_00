@@ -6,9 +6,19 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from src.exchange import BinanceClient
 from src.market_scanner import MarketScanner
+from src.config import Config
 
 def main():
     print("🔍 Initializing Scanner...")
+    
+    if Config.IS_TESTNET:
+        print("\n" + "="*50)
+        print("⚠️  WARNING: RUNNING IN TESTNET MODE")
+        print("   - You will see test assets (e.g., MILK, 0G)")
+        print("   - These are NOT real Mainnet coins")
+        print("   - Set IS_TESTNET=False in .env for Real Trading")
+        print("="*50 + "\n")
+
     try:
         client = BinanceClient()
         if not client.validate_connectivity():

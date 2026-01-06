@@ -10,22 +10,39 @@ load_dotenv()
 class Settings(BaseSettings):
     # Exchange Configuration
     # Using alias to map env vars to fields
-    API_KEY: str = Field(..., alias="BINANCE_API_KEY")
-    SECRET_KEY: str = Field(..., alias="BINANCE_SECRET_KEY")
+    API_KEY: Optional[str] = Field(None, alias="BINANCE_API_KEY")
+    SECRET_KEY: Optional[str] = Field(None, alias="BINANCE_SECRET_KEY")
+    
+    # Testnet Specific Keys
+    TESTNET_API_KEY: Optional[str] = Field(None, alias="BINANCE_TESTNET_API_KEY")
+    TESTNET_SECRET_KEY: Optional[str] = Field(None, alias="BINANCE_TESTNET_SECRET_KEY")
+    
     IS_TESTNET: bool = Field(default=True)
     
     # Trading Parameters
-    INITIAL_EQUITY: float = 200.0  # USDT
-    TARGET_COIN_COUNT: int = 20
-    TARGET_VALUE_PER_COIN: float = 20.0  # USDT
+    INITIAL_EQUITY: float = 200.0  # USDT (Reference only, logic uses actual)
+    
+    # Strategy
+    MAX_OPEN_POSITIONS: int = 10 # Maximum number of coins to hold
+    LEVERAGE: int = 5
+    EFFECTIVE_LEVERAGE: float = 2.0 # Target total exposure multiplier (e.g. 2.0x of Equity)
+    
+    # Weights configuration (Symbol -> Weight 0.0 to 1.0)
+    # Remaining weight is distributed equally among other selected coins
+    COIN_WEIGHTS: Dict[str, float] = {
+        "BTC/USDT": 0.4, # 40% allocation to BTC
+        "ETH/USDT": 0.3, # 30% allocation to ETH
+    }
     
     # Rebalancing Parameters
-    REBALANCE_THRESHOLD_PCT: float = 0.05  # 5%
+    REBALANCE_THRESHOLD_PCT: float = 0.05  # 5% deviation triggers trade
     SCAN_INTERVAL_MINUTES: int = 5
     
     # Risk Management
-    MAX_DRAWDOWN_PCT: float = 0.30  # 30%
+    MAX_DRAWDOWN_PCT: float = 0.30  # Global Account Stop Loss
+    MAX_POS_DRAWDOWN_PCT: float = 0.15 # Single Position Stop Loss (15%)
     MAX_FUNDING_RATE_APR: float = 1.00 # 100% APR
+    MAX_MARGIN_UTILIZATION_PCT: float = 0.80 # Max 80% of Equity used as Margin
     
     # Minimum Order Value (Binance Futures constraint)
     MIN_ORDER_VALUE: float = 5.1 

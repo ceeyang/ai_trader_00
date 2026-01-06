@@ -1,5 +1,6 @@
 import sys
 import os
+import asyncio
 
 # Ensure src is in path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -8,7 +9,7 @@ from src.exchange import BinanceClient
 from src.market_scanner import MarketScanner
 from src.config import Config
 
-def main():
+async def main():
     print("🔍 Initializing Scanner...")
     
     if Config.IS_TESTNET:
@@ -19,14 +20,15 @@ def main():
         print("   - Set IS_TESTNET=False in .env for Real Trading")
         print("="*50 + "\n")
 
+    client = None
     try:
         client = BinanceClient()
-        if not client.validate_connectivity():
+        if not await client.validate_connectivity():
             return
             
         scanner = MarketScanner(client)
         print("📊 executing market scan...")
-        top_coins = scanner.get_top_coins(limit=50)
+        top_coins = await scanner.get_top_coins(limit=50)
         
         print("\n✅ Recommended Assets to Buy (Top Selected):")
         print("---------------------------------------------")
@@ -37,6 +39,9 @@ def main():
         
     except Exception as e:
         print(f"❌ Scan failed: {e}")
+    finally:
+        if client:
+            await client.close()
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

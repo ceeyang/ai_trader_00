@@ -82,7 +82,7 @@ class MarketScanner:
                 if len(final_list) >= Config.TARGET_COIN_COUNT:
                     break
             
-            logger.info(f"✅ Scanner Selected {len(final_list)} coins: {final_list}")
+            logger.info(f"✅ Scanner Selected {len(final_list)}")
             return final_list
 
         except Exception as e:

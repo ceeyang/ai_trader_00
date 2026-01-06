@@ -16,9 +16,19 @@ class BinanceClient:
         """
         初始化 Binance 交易所客户端 (Initialize Binance Exchange Client) - Async
         """
+        # Select Keys based on environment
+        if Config.IS_TESTNET and Config.TESTNET_API_KEY:
+            api_key = Config.TESTNET_API_KEY
+            secret = Config.TESTNET_SECRET_KEY
+            logger.info("🔧 Using TESTNET Credentials")
+        else:
+            api_key = Config.API_KEY
+            secret = Config.SECRET_KEY
+            
         self.config = {
-            'apiKey': Config.API_KEY,
-            'secret': Config.SECRET_KEY,
+            'apiKey': api_key,
+            'secret': secret,
+            # 'verbose': True, # DEBUG: Enable verbose output to see raw requests
             'enableRateLimit': True,
             'options': {
                 'defaultType': 'future',  # 默认使用合约 (Futures)
@@ -30,18 +40,32 @@ class BinanceClient:
         
         if Config.IS_TESTNET:
             # Manual Override for Futures Testnet
-            self.exchange.urls['api']['fapiPublic'] = 'https://testnet.binancefuture.com/fapi/v1'
-            self.exchange.urls['api']['fapiPrivate'] = 'https://testnet.binancefuture.com/fapi/v1'
-            self.exchange.urls['api']['public'] = 'https://testnet.binancefuture.com/fapi/v1'
-            self.exchange.urls['api']['private'] = 'https://testnet.binancefuture.com/fapi/v1'
+            # According to official docs: https://demo-fapi.binance.com
+            testnet_base = 'https://demo-fapi.binance.com/fapi/v1'
+            testnet_base_v2 = 'https://demo-fapi.binance.com/fapi/v2'
+            testnet_base_v3 = 'https://demo-fapi.binance.com/fapi/v3'
+            
+            self.exchange.urls['api']['fapiPublic'] = testnet_base
+            self.exchange.urls['api']['fapiPrivate'] = testnet_base
+            self.exchange.urls['api']['fapiPublicV2'] = testnet_base_v2
+            self.exchange.urls['api']['fapiPrivateV2'] = testnet_base_v2
+            self.exchange.urls['api']['fapiPublicV3'] = testnet_base_v3
+            self.exchange.urls['api']['fapiPrivateV3'] = testnet_base_v3
+            
+            # General public/private overrides just in case
+            self.exchange.urls['api']['public'] = testnet_base
+            self.exchange.urls['api']['private'] = testnet_base
             
             # Map sapi (Spot API) to allow CCXT internals to pass checks
             self.exchange.urls['api']['sapi'] = 'https://testnet.binance.vision/sapi/v1'
             
-            logger.warning("⚠️ Running in TESTNET mode (Manual URL Config)")
+            logger.warning("⚠️ Running in TESTNET mode (URL: demo-fapi.binance.com)")
             
         # Optimization: Disable fetchCurrencies
         self.exchange.has['fetchCurrencies'] = False
+
+        logger.info(f"🔧 Config: {self.config}")
+        logger.info(f"🔧 Exchange: {self.exchange}")
 
     async def close(self):
         """Cleanup connection"""
@@ -78,19 +102,48 @@ class BinanceClient:
         获取账户余额信息 (Get Account Balance)
         """
         try:
-            # Bypass CCXT fetch_balance() which may try to hit SAPI (Spot) endpoints
-            # Use direct Futures API call: GET /fapi/v2/account
-            account_info = await self.exchange.fapiPrivateV2GetAccount()
+            # Use standard CCXT fetch_balance which handles Testnet URLs better if config is right
+            # We filter for 'future' type implicitly by connection options, but specifying type is safer
+            balance = await self.exchange.fetch_balance({'type': 'future'})
             
-            # Extract Equity and Margin
-            total_equity = float(account_info['totalMarginBalance'])
-            free_margin = float(account_info['availableBalance'])
+            # CCXT normalizes this into 'total' and 'free'
+            # For Futures, we typically care about:
+            # - total_equity (Total Margin Balance) matches 'total'['USDT'] typically?
+            # Actually CCXT structures futures balance differently sometimes.
+            # Let's inspect the 'info' if needed, or use the common structure.
+            
+            # Common CCXT futures structure:
+            # balance['USDT']['total'] = wallet balance ? or margin balance?
+            # It's safer to read from specific fields if we want "Total Equity" (Margin Balance).
+            
+            # However, for robustness, let's look at the raw info if available, or trust CCXT.
+            # The previous code used 'totalMarginBalance' from raw API.
+            # CCXT maps 'total' to wallet balance usually.
+            
+            # Let's try to find 'totalMarginBalance' in info
+            info = balance.get('info', {})
+            
+            if 'totalMarginBalance' in info:
+                total_equity = float(info['totalMarginBalance'])
+                free_margin = float(info['availableBalance'])
+            else:
+                # Fallback to standard CCXT structure (might be slightly different meaning)
+                total_equity = float(balance.get('USDT', {}).get('total', 0.0))
+                free_margin = float(balance.get('USDT', {}).get('free', 0.0))
             
             return {
                 'total_equity': total_equity,
                 'free_margin': free_margin
             }
+
         except Exception as e:
+            msg = str(e)
+            if "-2015" in msg:
+                 logger.error(f"❌ AUTH ERROR: Invalid API Key or Permissions. \n"
+                              f"   >> Ensure you are using BINANCE FUTURES TESTNET keys (https://testnet.binancefuture.com/)\n"
+                              f"   >> NOT Spot Testnet keys.")
+            else:
+                logger.error(f"❌ Error fetching balance: {e}")
             logger.error(f"❌ Error fetching balance: {e}")
             return {'total_equity': 0.0, 'free_margin': 0.0}
 
@@ -174,3 +227,22 @@ class BinanceClient:
         except Exception as e:
             logger.error(f"❌ Error fetching funding rates: {e}")
             return {}
+
+    async def get_symbol_limits(self, symbol: str) -> Dict[str, float]:
+        """
+        获取交易对的限制信息 (Get Symbol Limits)
+        """
+        try:
+            if not self.exchange.markets:
+                await self.exchange.load_markets()
+            
+            market = self.exchange.market(symbol)
+            return {
+                'min_amount': market['limits']['amount']['min'],
+                'min_cost': market['limits']['cost']['min'], # Min Notional
+                'amount_precision': market['precision']['amount'],
+            }
+        except Exception as e:
+            logger.warning(f"⚠️ Could not get limits for {symbol}: {e}")
+            # Return safe defaults (conservative)
+            return {'min_amount': 0.001, 'min_cost': 5.0, 'amount_precision': 0.001}

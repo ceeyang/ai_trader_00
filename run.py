@@ -1,10 +1,11 @@
 import sys
-import os
-
-# Add src to the Python path
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
-
+from pathlib import Path
 import asyncio
+
+# Add src to python path
+src_path = Path(__file__).parent / "src"
+sys.path.append(str(src_path))
+
 from src.main import main_loop
 
 if __name__ == "__main__":

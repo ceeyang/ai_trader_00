@@ -6,7 +6,8 @@ from logger import logger
 class MarketScanner:
     def __init__(self, client: BinanceClient):
         self.client = client
-        self.blacklist = ["USDC/USDT", "TUSD/USDT", "FDUSD/USDT", "USDP/USDT"] # Stablecoins
+        # Blacklist: Stablecoins + Illiquid Testnet Assets (causing -4131/MaxQty errors)
+        self.blacklist = ["USDC/USDT", "TUSD/USDT", "FDUSD/USDT", "USDP/USDT", "BTCDOM/USDT", "AIA/USDT", "MYRO/USDT"]
 
     async def get_top_coins(self, limit: int = 50) -> List[str]:
         """
@@ -69,20 +70,33 @@ class MarketScanner:
                 if is_stable:
                     continue
                 
-                # Filter 2: Funding Rate < 100% APR 
+                # Filter 2: Funding Rate Checks
                 fr = funding_rates.get(symbol, 0.0)
-                # APR = fr * 3 * 365
-                apr = fr * 3 * 365
-                if apr > Config.MAX_FUNDING_RATE_APR:
-                    # logger.debug(f"⚠️ Skipping {symbol} due to High Funding Rate: {apr:.2%}")
+                
+                # Check 2a: Avoid Paying Fees (Long pays Short if Rate > 0)
+                if Config.AVOID_PAYING_FUNDING_FEES and fr > 0:
+                    # logger.debug(f"⚠️ Skipping {symbol} due to Positive Funding Rate (Fee Payment): {fr:.6f}")
                     continue
+
+                # Check 2b: Abnormal Rate Check (APR)
+                if Config.CHECK_FUNDING_RATE_APR:
+                    # APR = fr * 3 * 365
+                    apr = fr * 3 * 365
+                    if abs(apr) > Config.MAX_FUNDING_RATE_APR:
+                        # logger.debug(f"⚠️ Skipping {symbol} due to Abnormal Funding Rate: {apr:.2%}")
+                        continue
                 
                 final_list.append(symbol)
                 
-                if len(final_list) >= Config.TARGET_COIN_COUNT:
+                if len(final_list) >= Config.MAX_OPEN_POSITIONS:
                     break
             
-            logger.info(f"✅ Scanner Selected {len(final_list)}")
+            logger.info("✅ Recommended Assets to Buy (Top Selected):")
+            logger.info("---------------------------------------------")
+            for i, coin in enumerate(final_list, 1):
+                logger.info(f"{i}. {coin}")
+            logger.info("---------------------------------------------")
+            logger.info(f"Total: {len(final_list)} coins selected.")
             return final_list
 
         except Exception as e:

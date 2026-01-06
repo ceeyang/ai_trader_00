@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from typing import List, Optional
+from typing import List, Optional, Dict
 from pydantic import Field
 from pydantic_settings import BaseSettings
 
@@ -41,7 +41,12 @@ class Settings(BaseSettings):
     # Risk Management
     MAX_DRAWDOWN_PCT: float = 0.30  # Global Account Stop Loss
     MAX_POS_DRAWDOWN_PCT: float = 0.15 # Single Position Stop Loss (15%)
-    MAX_FUNDING_RATE_APR: float = 1.00 # 100% APR
+    
+    # Funding Rate Filters
+    CHECK_FUNDING_RATE_APR: bool = True # Switch to enable/disable abnormally high rate check
+    MAX_FUNDING_RATE_APR: float = 1.00 # 100% APR limit (considered abnormal)
+    AVOID_PAYING_FUNDING_FEES: bool = True # If True, will skip any coin with Positive Funding Rate (Long pays Short)
+    
     MAX_MARGIN_UTILIZATION_PCT: float = 0.80 # Max 80% of Equity used as Margin
     
     # Minimum Order Value (Binance Futures constraint)

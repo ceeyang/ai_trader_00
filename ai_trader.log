@@ -1,91 +1,79 @@
-2026-01-06 16:05:20 [INFO] AiTrader: 🛑 Bot stopping gracefully...
-2026-01-06 16:05:20 [INFO] AiTrader: 🔌 Connection closed.
-2026-01-06 16:05:23 [INFO] AiTrader: === 🚀 Starting Quantitative Trading Bot (AsyncIO) ===
-2026-01-06 16:05:23 [INFO] AiTrader: 🔧 Using TESTNET Credentials
-2026-01-06 16:05:23 [WARNING] AiTrader: ⚠️ Running in TESTNET mode (URL: demo-fapi.binance.com)
-2026-01-06 16:05:23 [INFO] AiTrader: 🔧 Config: {'apiKey': '7Ec4qeNFjfhz3oARTaML8MNQiWh3Ztg8HsMidZjMpWMDeNVjxsARish8pfXo8AtS', 'secret': 'Mfh3cO3KF3Rnn3mkuyOZM4wPS8UmOIiHHO4zUzVScEGakCJTDYeIKhnnU2eSzn4u', 'verbose': True, 'enableRateLimit': True, 'options': {'defaultType': 'future', 'fetchMarkets': ['linear']}}
-2026-01-06 16:05:23 [INFO] AiTrader: 🔧 Exchange: Binance
-2026-01-06 16:05:23 [INFO] AiTrader: ✅ Binance API Connected Successfully
-2026-01-06 16:05:23 [INFO] AiTrader: ✅ Bot initialized. Schedule: Every 5 minutes.
-2026-01-06 16:05:23 [INFO] AiTrader: 🔍 Scanning Market for Top Assets...
-2026-01-06 16:05:26 [INFO] AiTrader: ✅ Scanner Selected 20
-2026-01-06 16:05:26 [INFO] AiTrader: --- ⚖️ Starting Rebalance Cycle ---
-2026-01-06 16:05:27 [INFO] AiTrader: 💰 Account Equity: 5000.00 USDT
-2026-01-06 16:05:31 [INFO] AiTrader: 🚀 Executing BUY BTC/USDT:USDT: 0.0002142476853215697 units
-2026-01-06 16:05:31 [ERROR] AiTrader: ❌ Order Failed (BTC/USDT:USDT buy): binance amount of BTC/USDT:USDT must be greater than minimum amount precision of 0.001
-2026-01-06 16:05:31 [INFO] AiTrader: 🚀 Executing BUY DOGE/USDT:USDT: 133.2267519317879 units
-2026-01-06 16:05:31 [INFO] AiTrader: 🚀 Executing BUY XRP/USDT:USDT: 8.528057308545113 units
-2026-01-06 16:05:31 [INFO] AiTrader: 🚀 Executing BUY ETH/USDT:USDT: 0.0062064385593614815 units
-2026-01-06 16:05:31 [ERROR] AiTrader: ❌ Order Failed (ETH/USDT:USDT buy): binance {"code":-4164,"msg":"Order's notional must be no smaller than 20 (unless you choose reduce only)."}
-2026-01-06 16:05:31 [INFO] AiTrader: 🚀 Executing BUY BCH/USDT:USDT: 0.03125341834263123 units
-2026-01-06 16:05:32 [INFO] AiTrader: 🚀 Executing BUY BNB/USDT:USDT: 0.02198381990854731 units
-2026-01-06 16:05:32 [INFO] AiTrader: 🚀 Executing BUY MYRO/USDT:USDT: 2614.3790849673205 units
-2026-01-06 16:05:32 [ERROR] AiTrader: ❌ Order Failed (MYRO/USDT:USDT buy): binance {"code":-4131,"msg":"The counterparty's best price does not meet the PERCENT_PRICE filter limit."}
-2026-01-06 16:05:32 [INFO] AiTrader: 🚀 Executing BUY PONKE/USDT:USDT: 325.04469364537624 units
-2026-01-06 16:05:33 [INFO] AiTrader: 🚀 Executing BUY BTCDOM/USDT:USDT: 0.004597806846134395 units
-2026-01-06 16:05:33 [ERROR] AiTrader: ❌ Order Failed (BTCDOM/USDT:USDT buy): binance {"code":-4131,"msg":"The counterparty's best price does not meet the PERCENT_PRICE filter limit."}
-2026-01-06 16:05:33 [INFO] AiTrader: 🚀 Executing BUY AIA/USDT:USDT: 149.25373134328356 units
-2026-01-06 16:05:33 [ERROR] AiTrader: ❌ Order Failed (AIA/USDT:USDT buy): binance {"code":-4131,"msg":"The counterparty's best price does not meet the PERCENT_PRICE filter limit."}
-2026-01-06 16:05:33 [INFO] AiTrader: 🚀 Executing BUY VOXEL/USDT:USDT: 1507.1590052750564 units
-2026-01-06 16:05:34 [INFO] AiTrader: 🚀 Executing BUY FIS/USDT:USDT: 1048.767697954903 units
-2026-01-06 16:05:34 [INFO] AiTrader: 🚀 Executing BUY TOKEN/USDT:USDT: 3855.7933294775403 units
-2026-01-06 16:05:35 [INFO] AiTrader: 🚀 Executing BUY REI/USDT:USDT: 5012.5313283208025 units
-2026-01-06 16:05:35 [INFO] AiTrader: 🚀 Executing BUY PORT3/USDT:USDT: 5405.405405405405 units
-2026-01-06 16:05:35 [INFO] AiTrader: 🚀 Executing BUY 1000X/USDT:USDT: 864.6779074794639 units
-2026-01-06 16:05:36 [INFO] AiTrader: 🚀 Executing BUY OBOL/USDT:USDT: 693.2409012131716 units
-2026-01-06 16:05:36 [INFO] AiTrader: 🚀 Executing BUY RIVER/USDT:USDT: 1.16427989288625 units
-2026-01-06 16:05:37 [INFO] AiTrader: 🚀 Executing BUY MILK/USDT:USDT: 3984.06374501992 units
-2026-01-06 16:05:38 [INFO] AiTrader: 🚀 Executing BUY SKATE/USDT:USDT: 3676.4705882352937 units
-2026-01-06 16:05:38 [INFO] AiTrader: --- ✅ Rebalance Cycle Complete ---
+2026-01-06 17:51:33 [INFO] AiTrader: 🔍 Scanning Market for Top Assets...
+2026-01-06 17:51:36 [INFO] AiTrader: 
+✅ Recommended Assets to Buy (Top Selected):
+2026-01-06 17:51:36 [INFO] AiTrader: ---------------------------------------------
+2026-01-06 17:51:36 [INFO] AiTrader: 1. BTC/USDT:USDT
+2026-01-06 17:51:36 [INFO] AiTrader: 2. DOGE/USDT:USDT
+2026-01-06 17:51:36 [INFO] AiTrader: 3. XRP/USDT:USDT
+2026-01-06 17:51:36 [INFO] AiTrader: 4. ETH/USDT:USDT
+2026-01-06 17:51:36 [INFO] AiTrader: 5. BCH/USDT:USDT
+2026-01-06 17:51:36 [INFO] AiTrader: 6. BNB/USDT:USDT
+2026-01-06 17:51:36 [INFO] AiTrader: 7. PONKE/USDT:USDT
+2026-01-06 17:51:36 [INFO] AiTrader: 8. VOXEL/USDT:USDT
+2026-01-06 17:51:36 [INFO] AiTrader: 9. FIS/USDT:USDT
+2026-01-06 17:51:36 [INFO] AiTrader: 10. TOKEN/USDT:USDT
+2026-01-06 17:51:36 [INFO] AiTrader: ---------------------------------------------
+2026-01-06 17:51:36 [INFO] AiTrader: Total: 10 coins selected.
+2026-01-06 17:51:36 [INFO] AiTrader: --- ⚖️ Starting Rebalance Cycle ---
+2026-01-06 17:51:36 [INFO] AiTrader: 💰 Account Equity: 4965.14 USDT
+2026-01-06 17:51:39 [INFO] AiTrader: 🎯 Target Portfolio: 10 Assets
+2026-01-06 17:51:39 [INFO] AiTrader: 📊 Allocation Plan (Total Exposure: 9930.28 USDT):
+2026-01-06 17:51:39 [INFO] AiTrader:    🔹 BTC/USDT:USDT: Weight 10.0% -> Target 993.03 USDT (Curr: 934.90)
+2026-01-06 17:51:39 [WARNING] AiTrader: ⚠️ Skipping BTC/USDT:USDT: Amount 0.000622 < Min 0.001
+2026-01-06 17:51:39 [INFO] AiTrader:    🔹 DOGE/USDT:USDT: Weight 10.0% -> Target 993.03 USDT (Curr: 999.92)
+2026-01-06 17:51:39 [INFO] AiTrader:    🔹 XRP/USDT:USDT: Weight 10.0% -> Target 993.03 USDT (Curr: 1003.75)
+2026-01-06 17:51:39 [INFO] AiTrader:    🔹 ETH/USDT:USDT: Weight 10.0% -> Target 993.03 USDT (Curr: 1000.19)
+2026-01-06 17:51:39 [INFO] AiTrader:    🔹 BCH/USDT:USDT: Weight 10.0% -> Target 993.03 USDT (Curr: 999.07)
+2026-01-06 17:51:39 [INFO] AiTrader:    🔹 BNB/USDT:USDT: Weight 10.0% -> Target 993.03 USDT (Curr: 994.48)
+2026-01-06 17:51:39 [INFO] AiTrader:    🔹 PONKE/USDT:USDT: Weight 10.0% -> Target 993.03 USDT (Curr: 1010.50)
+2026-01-06 17:51:39 [INFO] AiTrader:    🔹 VOXEL/USDT:USDT: Weight 10.0% -> Target 993.03 USDT (Curr: 1007.03)
+2026-01-06 17:51:39 [INFO] AiTrader:    🔹 FIS/USDT:USDT: Weight 10.0% -> Target 993.03 USDT (Curr: 993.94)
+2026-01-06 17:51:39 [INFO] AiTrader:    🔹 TOKEN/USDT:USDT: Weight 10.0% -> Target 993.03 USDT (Curr: 0.00)
+2026-01-06 17:51:39 [INFO] AiTrader: 🚀 Executing BUY TOKEN/USDT:USDT: 189944.14394261668 units
+2026-01-06 17:51:39 [ERROR] AiTrader: ❌ Order Failed (TOKEN/USDT:USDT buy): binance {"code":-4005,"msg":"Quantity greater than max quantity."}
+2026-01-06 17:51:39 [INFO] AiTrader: --- ✅ Rebalance Cycle Complete ---
 
-2026-01-06 16:05:38 [INFO] AiTrader: 🛑 Bot stopping gracefully...
-2026-01-06 16:05:38 [INFO] AiTrader: 🔌 Connection closed.
-2026-01-06 16:05:57 [INFO] AiTrader: === 🚀 Starting Quantitative Trading Bot (AsyncIO) ===
-2026-01-06 16:05:57 [INFO] AiTrader: 🔧 Using TESTNET Credentials
-2026-01-06 16:05:57 [WARNING] AiTrader: ⚠️ Running in TESTNET mode (URL: demo-fapi.binance.com)
-2026-01-06 16:05:57 [INFO] AiTrader: 🔧 Config: {'apiKey': '7Ec4qeNFjfhz3oARTaML8MNQiWh3Ztg8HsMidZjMpWMDeNVjxsARish8pfXo8AtS', 'secret': 'Mfh3cO3KF3Rnn3mkuyOZM4wPS8UmOIiHHO4zUzVScEGakCJTDYeIKhnnU2eSzn4u', 'enableRateLimit': True, 'options': {'defaultType': 'future', 'fetchMarkets': ['linear']}}
-2026-01-06 16:05:57 [INFO] AiTrader: 🔧 Exchange: Binance
-2026-01-06 16:05:58 [INFO] AiTrader: ✅ Binance API Connected Successfully
-2026-01-06 16:05:58 [INFO] AiTrader: ✅ Bot initialized. Schedule: Every 5 minutes.
-2026-01-06 16:05:58 [INFO] AiTrader: 🔍 Scanning Market for Top Assets...
-2026-01-06 16:06:01 [INFO] AiTrader: ✅ Scanner Selected 20
-2026-01-06 16:06:01 [INFO] AiTrader: --- ⚖️ Starting Rebalance Cycle ---
-2026-01-06 16:06:01 [INFO] AiTrader: 💰 Account Equity: 4996.43 USDT
-2026-01-06 16:06:05 [INFO] AiTrader: 🚀 Executing BUY BTC/USDT:USDT: 0.00021421119938992648 units
-2026-01-06 16:06:05 [ERROR] AiTrader: ❌ Order Failed (BTC/USDT:USDT buy): binance amount of BTC/USDT:USDT must be greater than minimum amount precision of 0.001
-2026-01-06 16:06:05 [INFO] AiTrader: 🚀 Executing BUY ETH/USDT:USDT: 0.006206091899808853 units
-2026-01-06 16:06:05 [ERROR] AiTrader: ❌ Order Failed (ETH/USDT:USDT buy): binance {"code":-4164,"msg":"Order's notional must be no smaller than 20 (unless you choose reduce only)."}
-2026-01-06 16:06:05 [INFO] AiTrader: 🚀 Executing BUY MYRO/USDT:USDT: 2614.3790849673205 units
-2026-01-06 16:06:05 [ERROR] AiTrader: ❌ Order Failed (MYRO/USDT:USDT buy): binance {"code":-4131,"msg":"The counterparty's best price does not meet the PERCENT_PRICE filter limit."}
-2026-01-06 16:06:05 [INFO] AiTrader: 🚀 Executing BUY BTCDOM/USDT:USDT: 0.004598018254132469 units
-2026-01-06 16:06:06 [ERROR] AiTrader: ❌ Order Failed (BTCDOM/USDT:USDT buy): binance {"code":-4131,"msg":"The counterparty's best price does not meet the PERCENT_PRICE filter limit."}
-2026-01-06 16:06:06 [INFO] AiTrader: 🚀 Executing BUY AIA/USDT:USDT: 149.36519790888724 units
-2026-01-06 16:06:06 [INFO] AiTrader: --- ✅ Rebalance Cycle Complete ---
+2026-01-06 17:51:39 [INFO] AiTrader: 💤 Sleeping for 293.6s...
+2026-01-06 17:52:15 [INFO] AiTrader: 🛑 Bot stopping gracefully...
+2026-01-06 17:52:15 [INFO] AiTrader: 🔌 Connection closed.
+2026-01-06 18:04:14 [INFO] AiTrader: === 🚀 Starting Quantitative Trading Bot (AsyncIO) ===
+2026-01-06 18:04:14 [WARNING] AiTrader: ⚠️ Running in TESTNET mode (URL: demo-fapi.binance.com)
+2026-01-06 18:04:14 [INFO] AiTrader: ✅ Binance API Connected Successfully
+2026-01-06 18:04:14 [INFO] AiTrader: ✅ Bot initialized. Schedule: Every 5 minutes.
+2026-01-06 18:04:14 [INFO] AiTrader: 🔍 Scanning Market for Top Assets...
+2026-01-06 18:04:17 [INFO] AiTrader: ✅ Recommended Assets to Buy (Top Selected):
+2026-01-06 18:04:17 [INFO] AiTrader: ---------------------------------------------
+2026-01-06 18:04:17 [INFO] AiTrader: 1. BTC/USDT:USDT
+2026-01-06 18:04:17 [INFO] AiTrader: 2. DOGE/USDT:USDT
+2026-01-06 18:04:17 [INFO] AiTrader: 3. XRP/USDT:USDT
+2026-01-06 18:04:17 [INFO] AiTrader: 4. ETH/USDT:USDT
+2026-01-06 18:04:17 [INFO] AiTrader: 5. BCH/USDT:USDT
+2026-01-06 18:04:17 [INFO] AiTrader: 6. BNB/USDT:USDT
+2026-01-06 18:04:17 [INFO] AiTrader: 7. PONKE/USDT:USDT
+2026-01-06 18:04:17 [INFO] AiTrader: 8. VOXEL/USDT:USDT
+2026-01-06 18:04:17 [INFO] AiTrader: 9. FIS/USDT:USDT
+2026-01-06 18:04:17 [INFO] AiTrader: 10. TOKEN/USDT:USDT
+2026-01-06 18:04:17 [INFO] AiTrader: ---------------------------------------------
+2026-01-06 18:04:17 [INFO] AiTrader: Total: 10 coins selected.
+2026-01-06 18:04:17 [INFO] AiTrader: --- ⚖️ Starting Rebalance Cycle ---
+2026-01-06 18:04:17 [INFO] AiTrader: 💰 Account Equity: 5017.50 USDT
+2026-01-06 18:04:20 [INFO] AiTrader: 🎯 Target Portfolio: 10 Assets
+2026-01-06 18:04:20 [INFO] AiTrader: 📊 Allocation Plan (Total Exposure: 10035.01 USDT):
+2026-01-06 18:04:20 [INFO] AiTrader:    🔹 BTC/USDT:USDT: Weight 10.0% -> Target 1003.50 USDT (Curr: 936.03)
+2026-01-06 18:04:20 [WARNING] AiTrader: ⚠️ Skipping BTC/USDT:USDT: Amount 0.000721 < Min 0.001
+2026-01-06 18:04:20 [INFO] AiTrader:    🔹 DOGE/USDT:USDT: Weight 10.0% -> Target 1003.50 USDT (Curr: 1000.85)
+2026-01-06 18:04:20 [INFO] AiTrader:    🔹 XRP/USDT:USDT: Weight 10.0% -> Target 1003.50 USDT (Curr: 1005.97)
+2026-01-06 18:04:20 [INFO] AiTrader:    🔹 ETH/USDT:USDT: Weight 10.0% -> Target 1003.50 USDT (Curr: 1001.43)
+2026-01-06 18:04:20 [INFO] AiTrader:    🔹 BCH/USDT:USDT: Weight 10.0% -> Target 1003.50 USDT (Curr: 998.46)
+2026-01-06 18:04:20 [INFO] AiTrader:    🔹 BNB/USDT:USDT: Weight 10.0% -> Target 1003.50 USDT (Curr: 995.07)
+2026-01-06 18:04:20 [INFO] AiTrader:    🔹 PONKE/USDT:USDT: Weight 10.0% -> Target 1003.50 USDT (Curr: 1049.32)
+2026-01-06 18:04:20 [INFO] AiTrader:    🔹 VOXEL/USDT:USDT: Weight 10.0% -> Target 1003.50 USDT (Curr: 1005.51)
+2026-01-06 18:04:20 [INFO] AiTrader:    🔹 FIS/USDT:USDT: Weight 10.0% -> Target 1003.50 USDT (Curr: 994.47)
+2026-01-06 18:04:20 [INFO] AiTrader:    🔹 TOKEN/USDT:USDT: Weight 10.0% -> Target 1003.50 USDT (Curr: 0.00)
+2026-01-06 18:04:20 [INFO] AiTrader: 🚀 Executing BUY TOKEN/USDT:USDT: 192425.83362032595 units
+2026-01-06 18:04:21 [ERROR] AiTrader: ❌ Order Failed (TOKEN/USDT:USDT buy): binance {"code":-4005,"msg":"Quantity greater than max quantity."}
+2026-01-06 18:04:21 [INFO] AiTrader: --- ✅ Rebalance Cycle Complete ---
 
-2026-01-06 16:06:06 [INFO] AiTrader: 💤 Sleeping for 292.0s...
-2026-01-06 16:06:14 [INFO] AiTrader: 🛑 Bot stopping gracefully...
-2026-01-06 16:06:14 [INFO] AiTrader: 🔌 Connection closed.
-2026-01-06 16:15:01 [INFO] AiTrader: === 🚀 Starting Quantitative Trading Bot (AsyncIO) ===
-2026-01-06 16:15:01 [INFO] AiTrader: 🔧 Using TESTNET Credentials
-2026-01-06 16:15:01 [WARNING] AiTrader: ⚠️ Running in TESTNET mode (URL: demo-fapi.binance.com)
-2026-01-06 16:15:01 [INFO] AiTrader: 🔧 Config: {'apiKey': '7Ec4qeNFjfhz3oARTaML8MNQiWh3Ztg8HsMidZjMpWMDeNVjxsARish8pfXo8AtS', 'secret': 'Mfh3cO3KF3Rnn3mkuyOZM4wPS8UmOIiHHO4zUzVScEGakCJTDYeIKhnnU2eSzn4u', 'enableRateLimit': True, 'options': {'defaultType': 'future', 'fetchMarkets': ['linear']}}
-2026-01-06 16:15:01 [INFO] AiTrader: 🔧 Exchange: Binance
-2026-01-06 16:15:01 [INFO] AiTrader: ✅ Binance API Connected Successfully
-2026-01-06 16:15:01 [INFO] AiTrader: ✅ Bot initialized. Schedule: Every 5 minutes.
-2026-01-06 16:15:01 [INFO] AiTrader: 🔍 Scanning Market for Top Assets...
-2026-01-06 16:15:05 [ERROR] AiTrader: ❌ Error fetching funding rates: name 'loading_map' is not defined
-2026-01-06 16:15:05 [INFO] AiTrader: ✅ Scanner Selected 20
-2026-01-06 16:15:05 [INFO] AiTrader: --- ⚖️ Starting Rebalance Cycle ---
-2026-01-06 16:15:05 [INFO] AiTrader: 💰 Account Equity: 4993.76 USDT
-2026-01-06 16:15:09 [WARNING] AiTrader: ⚠️ Skipping BTC/USDT:USDT: Amount 0.000214 < Min 0.001
-2026-01-06 16:15:09 [INFO] AiTrader: 🚀 Executing BUY ETH/USDT:USDT: 0.006208403695241879 units
-2026-01-06 16:15:09 [ERROR] AiTrader: ❌ Order Failed (ETH/USDT:USDT buy): binance {"code":-4164,"msg":"Order's notional must be no smaller than 20 (unless you choose reduce only)."}
-2026-01-06 16:15:09 [INFO] AiTrader: 🚀 Executing BUY MYRO/USDT:USDT: 2604.1666666666665 units
-2026-01-06 16:15:10 [ERROR] AiTrader: ❌ Order Failed (MYRO/USDT:USDT buy): binance {"code":-4131,"msg":"The counterparty's best price does not meet the PERCENT_PRICE filter limit."}
-2026-01-06 16:15:10 [INFO] AiTrader: 🚀 Executing BUY BTCDOM/USDT:USDT: 0.004596010662744737 units
-2026-01-06 16:15:10 [ERROR] AiTrader: ❌ Order Failed (BTCDOM/USDT:USDT buy): binance {"code":-4131,"msg":"The counterparty's best price does not meet the PERCENT_PRICE filter limit."}
-2026-01-06 16:15:10 [INFO] AiTrader: --- ✅ Rebalance Cycle Complete ---
-
-2026-01-06 16:15:10 [INFO] AiTrader: 💤 Sleeping for 291.5s...
-2026-01-06 16:15:16 [INFO] AiTrader: 🛑 Bot stopping gracefully...
-2026-01-06 16:15:16 [INFO] AiTrader: 🔌 Connection closed.
+2026-01-06 18:04:21 [INFO] AiTrader: 💤 Sleeping for 293.5s...
+2026-01-06 18:04:22 [INFO] AiTrader: 🛑 Bot stopping gracefully...
+2026-01-06 18:04:22 [INFO] AiTrader: 🔌 Connection closed.

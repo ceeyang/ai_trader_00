@@ -134,6 +134,11 @@ class Rebalancer:
                 logger.warning(f"⚠️ Skipping {symbol}: Amount {amount:.6f} < Min {limits['min_amount']}")
                 continue
                 
+            # Check Max Quantity (Fix for -4005)
+            if amount > limits['max_amount']:
+                logger.warning(f"⚠️ Capping {symbol}: Amount {amount:.6f} -> Max {limits['max_amount']}")
+                amount = limits['max_amount']
+                
             # Check Min Notional (Cost)
             actual_value = amount * price
             if actual_value < limits['min_cost']:

@@ -20,7 +20,6 @@ class BinanceClient:
         if Config.IS_TESTNET and Config.TESTNET_API_KEY:
             api_key = Config.TESTNET_API_KEY
             secret = Config.TESTNET_SECRET_KEY
-            logger.info("🔧 Using TESTNET Credentials")
         else:
             api_key = Config.API_KEY
             secret = Config.SECRET_KEY
@@ -63,9 +62,6 @@ class BinanceClient:
             
         # Optimization: Disable fetchCurrencies
         self.exchange.has['fetchCurrencies'] = False
-
-        logger.info(f"🔧 Config: {self.config}")
-        logger.info(f"🔧 Exchange: {self.exchange}")
 
     async def close(self):
         """Cleanup connection"""
@@ -239,10 +235,11 @@ class BinanceClient:
             market = self.exchange.market(symbol)
             return {
                 'min_amount': market['limits']['amount']['min'],
+                'max_amount': market['limits']['amount']['max'], # Added Max Amount
                 'min_cost': market['limits']['cost']['min'], # Min Notional
                 'amount_precision': market['precision']['amount'],
             }
         except Exception as e:
             logger.warning(f"⚠️ Could not get limits for {symbol}: {e}")
             # Return safe defaults (conservative)
-            return {'min_amount': 0.001, 'min_cost': 5.0, 'amount_precision': 0.001}
+            return {'min_amount': 0.001, 'max_amount': 1000000.0, 'min_cost': 5.0, 'amount_precision': 0.001}
